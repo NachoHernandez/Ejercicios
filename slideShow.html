@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    
+</head>
+<body>
+    
+
+        <img name="slideshow" src="img/foto2.jpg" width="300" height="300"/>
+    
+                        <a href="" onclick="return change_image(-1)">Previous</a>
+                        <a href="" onclick="return change_image(1)">Next</a>
+          
+      
+
+     
+    
+        <script type="text/javascript">
+        var Image = new Array("img/foto.jpg", "img/foto1.jpg", "img/foto2.jpg");
+        var Image_Number = 0;
+        var Image_Length = Image.length - 1;
+
+        function change_image(num){
+            Image_Number = Image_Number + num;
+
+            if (Image_Number > Image_Length){
+                    Image_Number = 0;
+            }
+
+            if (Image_Number < 0){
+                    Image_Number = Image_Length;
+            }
+
+            document.slideshow.src= Image[Image_Number];
+            return false;
+
+        }
+
+    </script>
+    </body>
+</html>

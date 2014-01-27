@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script>
+	/* Este ejercicio propone 5 botones con el nombre de un color y cambiar el fondo del body con dicho color al pulsarlo, he usado una función en javascript para simplificar el código, mandando un argumento con el color a cambiar desde el evento onclick de cada boton */
+	
+		function cambiaColor(color){
+  document.bgColor=color;
+}
+	</script>
+</head>
+<body>
+	<button id="verde" onclick=cambiaColor("green")>verde</button>
+	<button id="azul" onclick=cambiaColor("blue")>azul</button>
+	<button id="rojo" onclick=cambiaColor("red")>rojo</button>
+	<button id="amarillo" onclick=cambiaColor("yellow")>amarillo</button>
+	<button id="naranja" onclick=cambiaColor("orange")>naranja</button>
+</body>
+</html>

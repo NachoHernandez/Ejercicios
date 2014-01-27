@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script>
+	// creando objetos con un constructor
+		function Persona(nombre, genero, edad){
+			this.nombre = nombre;
+			this.genero = genero;
+			this.edad = edad;
+		}
+
+		// instanciando el objeto persona
+
+		var Antonio = new Persona("Antonio Hernández", "Masculino", 32);
+			for (var x in Antonio){
+		document.write(Antonio[x] + "<br>");
+ 		}
+	</script>
+</head>
+<body>
+	<p>Hemos creado un constructor de objetos llamado <span style="color: red">persona</span></p>
+	<p>Y después he instanciado <span style="color: red">persona</span> creando un objeto <span style="color: red">Antonio</span></p>
+</body>
+</html>
