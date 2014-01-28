@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script>
+	var oMovil = new Object();
+oMovil.x = 458;
+oMovil.y = 175;
+oMovil.direccion =  0;
+oMovil.velocidad = 8;
+
+function mover(){
+	var m = document.getElementById("cercle");
+	var nX, nY;
+	if ( (Math.random()*145) < 1 )
+		oMovil.direccion = Math.random()*2*Math.PI 
+	
+	while (1) {
+		nX = oMovil.x + Math.cos(oMovil.direccion) * oMovil.velocidad;	
+		nY = oMovil.y + Math.sin(oMovil.direccion) * oMovil.velocidad;
+		if ( nY > 0 && nY < 336 && nX > 0 && nX < 502) break;
+		oMovil.direccion = Math.random()*2*Math.PI;  
+	}  	
+	
+	oMovil.x = nX;
+	oMovil.y = nY; 
+	m.style.top  = (oMovil.y).toFixed(0) + "px";	
+	m.style.left = (oMovil.x).toFixed(0) + "px";	
+	
+	
+}
+
+
+window.onload = function () {
+	setInterval(mover,50)
+};
+</script>
+<style>
+	#cercle{
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		background-color: red;
+		position: absolute;
+	}
+	</style>
+</head>
+<body>
+	<div id="cercle"></div>
+	<div id="direccion"></div>
+	<div id="coor_x"></div>
+	<div id="coor_y"></div>
+</body>
+</html>
