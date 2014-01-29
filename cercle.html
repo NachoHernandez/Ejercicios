@@ -19,7 +19,7 @@ function mover(){
 	while (1) {
 		nX = oMovil.x + Math.cos(oMovil.direccion) * oMovil.velocidad;	
 		nY = oMovil.y + Math.sin(oMovil.direccion) * oMovil.velocidad;
-		if ( nY > 0 && nY < 336 && nX > 0 && nX < 502) break;
+		if ( nY > 0 && nY < 536 && nX > 0 && nX < 802) break;
 		oMovil.direccion = Math.random()*2*Math.PI;  
 	}  	
 	

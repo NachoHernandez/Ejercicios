@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<style type="text/css">
+		body {
+  font-size: 16px;
+}
+#relojillo{
+  width:200px;
+  height: 200px;
+  font-size: 5rem;
+  
+}
+	</style>
+</head>
+<body>
+<div  id="relojillo"></div>
+<p>Reloj hecho con una función autoejecutable, aqui tuve un problema al poner el script en el head, ya que la función innerHTML no reconocia el #relojillo, ya que aun no se habia cargado.</p>
+	<script>
+(function reloj(){
+  var fecha= new Date();
+  var horas= fecha.getHours();
+  var minutos= fecha.getMinutes();
+  var segundos= fecha.getSeconds();
+  if(minutos<10){
+  document.getElementById('relojillo').innerHTML = horas + ":" + "0" +minutos + ":" +segundos;
+    if(segundos<10){
+      document.getElementById('relojillo').innerHTML = horas + ":" + "0" +minutos + ":"+ "0" +segundos;
+    }
+  } else if(minutos>=10){
+    document.getElementById('relojillo').innerHTML = horas + ":"+minutos + ":"+segundos;
+    if(segundos<10){
+      document.getElementById('relojillo').innerHTML = horas + ":"+minutos + ":"+ "0" +segundos;
+    }
+  }
+  
+  ahora= setTimeout(reloj,1000);
+})();
+	</script>
+</body>
+</html>
