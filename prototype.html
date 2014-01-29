@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>Propiedad prototype</title>
+</head>
+<body>
+	<p>
+		Ejercicio usando la propiedad "prototype" de los objetos, con dicha propiedad lo que podemos hacer es añadir propiedades y metodos a una función constructora, y con esto añadiremos los mismos a todas las instancias de este objeto.
+
+		Nos viene bien, porque así no necesitamos modificar el constructor cuando queremos añadir nuevas propiedades o metodos, hay que destacar que los objetos que vienen definidos por JavaScript también disponen de esta propiedad.
+	</p>
+	<script>
+		var coche = function(distancia, tiempo) {
+  			this.distancia = distancia;
+  			this.tiempo = tiempo;
+  
+			}
+
+		coche.prototype.calcVelocidad = function() {
+   		 return this.distancia * this.tiempo ;
+  			}
+
+		var seat = new coche(20,20);
+		var mercedes = new coche (10,10);
+		document.write("la velocidad del coche seat es de: " + seat.calcVelocidad() + "<br>" + "la velocidad del coche mercedes es: " + mercedes.calcVelocidad()); // 28.27
+
+	</script>
+</body>
+</html>
