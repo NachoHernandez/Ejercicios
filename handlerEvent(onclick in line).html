@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Manejador de eventos(onclick) en linea</title>
+</head>
+<body>
+	<a href="http://www.marca.com" onclick="return manejadorEventos();" >Click aqui </a>
+
+<script>
+  function manejadorEventos(){
+    alert("Se ha hecho click");
+    return false; // con esto conseguimos que después de mostrar la alerta, no se haga efecto la llamada a Marca.com
+  }
+</script>
+</body>
+</html>

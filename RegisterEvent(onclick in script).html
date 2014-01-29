@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>Manejador de eventos(onclick) en script</title>
+</head>
+<body>
+	<a href="enlace" id="miEnlace" >Click aqui </a>
+<script>
+  var enlace = document.getElementById("miEnlace");
+  registrarEvento(enlace, "click", manejadorEventos);
+  function registrarEvento(elemento,evento,manejador) {
+    if (elemento.addEventListener) // Si es IE
+      elemento.addEventListener(evento,manejador,false);
+    else  // Otros navegadores
+      elemento.attachEvent("on"+evento,manejador);
+}
+
+  function manejadorEventos(){
+    alert("Se ha hecho click");
+    return false;
+  }
+</script>
+</script>
+</script>
+</body>
+</html>
