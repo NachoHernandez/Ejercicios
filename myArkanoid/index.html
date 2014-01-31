@@ -1,0 +1,223 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title></title>
+    </head>
+    <body>
+
+
+
+<canvas id="pantalla" width="300" height="500" style="border:1px solid;" />
+<script type="text/javascript"  src="js/html5.js" ></script>
+
+<script type="text/javascript">
+//Acceso al canvas
+var canvas = document.getElementById("pantalla")
+var ctx    = canvas.getContext("2d");
+
+ctx.fillStyle = 'red';
+ctx.strokeStyle = 'black';
+ctx.stroke();
+
+//Configuración de la Pantalla
+var WIDTH  = canvas.width;  //Otenemos la anchura del canvas
+var HEIGHT = canvas.height; //Obtenemos la altura del canvas
+
+//Configuracion Juego
+var NUM_FILAS;
+var NUM_COLUMNAS;
+var velocidad       = 15;
+var intervalId;
+
+//Configuración de los ladrillos
+var ladrillos;
+var LADRILLO_ANCHURA;
+var LADRILLO_ALTURA;
+var ESPACIO_LADRILLOS;
+var COLOR_BLANCO = '#000000';
+var COLOR_ROJO   = '#FF0000';
+var COLOR_AZUL   = '#0000FF';
+var COLOR_VERDE  = '#00FF00';
+var colores      = [COLOR_BLANCO, COLOR_ROJO, COLOR_AZUL, COLOR_VERDE];
+
+//Configuración de la paleta
+var paleta_x;
+var PALETA_ALTURA;
+var PALETA_ANCHURA;
+
+//Configuración de la pelota
+var RADIO_PELOTA = 10;
+var x;
+var y;
+var dx = 2;
+var dy = 4;
+
+
+
+function crear_ladrillos() {
+  NUM_FILAS           = 5;
+  NUM_COLUMNAS        = 5;
+  LADRILLO_ANCHURA    = (WIDTH/NUM_COLUMNAS) - 1;
+  LADRILLO_ALTURA     = 15;
+  ESPACIO_LADRILLOS   = 1;
+
+  ladrillos = new Array(NUM_FILAS);
+  for (i=0; i < NUM_FILAS; i++) {
+    ladrillos[i] = new Array(NUM_COLUMNAS);
+    for (j=0; j < NUM_COLUMNAS; j++) {
+      ladrillos[i][j] = 1;
+    }
+  }
+}
+
+function crear_paleta(){
+  paleta_x          = WIDTH / 2; //Posición donde se encuentra la paleta
+  PALETA_ALTURA     = 10;
+  PALETA_ANCHURA    = 75;
+}
+
+
+//Gestión de los eventos de la paleta
+function onKeyDown(evt) {
+  if (evt.keyCode == 39)  paleta_x += 35;
+  else if (evt.keyCode == 37)  paleta_x -= 35;
+}
+ 
+
+function pintar_paleta(ctx){
+    ctx.fillStyle = "#FF0000";
+    dibujar_rectangulo(ctx,
+                       paleta_x,
+                       HEIGHT-PALETA_ALTURA,
+                       PALETA_ANCHURA,
+                       PALETA_ALTURA);
+    ctx.fillStyle = "#000000";
+}
+
+function pintar_ladrillos(ctx){
+  for (i=0; i < NUM_FILAS; i++) {
+    for (j=0; j < NUM_COLUMNAS; j++) {
+      if (ladrillos[i][j] == 1) { //Existe ladrillo
+
+        ctx.fillStyle = colores[i%colores.length];
+
+        dibujar_rectangulo(ctx,
+                          (j * (LADRILLO_ANCHURA + ESPACIO_LADRILLOS)) + ESPACIO_LADRILLOS,
+                          (i * (LADRILLO_ALTURA + ESPACIO_LADRILLOS)) + ESPACIO_LADRILLOS,
+                           LADRILLO_ANCHURA,
+                           LADRILLO_ALTURA);
+
+                           
+      }
+    }
+  }
+  ctx.fillStyle = "#000000";
+}
+
+//Indica si la pelota toca el borde de la paleta
+function toca_borde(){
+    if (x >= paleta_x  && x <= paleta_x + (2*RADIO_PELOTA)){ //borde izquierdo
+        return true;
+    }
+    if (x <= (paleta_x + PALETA_ANCHURA) && x >= (paleta_x + PALETA_ANCHURA)- (2*RADIO_PELOTA)){ //borde derecho
+        return true;
+    }
+    return false;
+}
+
+//Comprueba si se han eliminado todos los ladrillos
+function no_hay_ladrillos(){
+  for (i=0; i < NUM_FILAS; i++) {
+    for (j=0; j < NUM_COLUMNAS; j++) {
+      if (ladrillos[i][j] == 1) { //Existe ladrillo
+           return false;
+      }
+    }
+  }
+  return true;
+}
+
+//Dibuja el juego
+function draw() {
+  //Limpiamos toda la ventana del juego
+  limpiar_canvas(ctx);
+
+  //Pintamos la pelota en la posición donde se encuentre
+  dibujar_circulo(ctx,x, y, RADIO_PELOTA);
+
+  //Pintamos la paleta
+  pintar_paleta(ctx);
+
+ //Pintamos los ladrillos
+  pintar_ladrillos(ctx);
+
+  //Comprobamos si hemos ganado la partida
+  if (no_hay_ladrillos()){
+          clearInterval(intervalId);
+          alert("Ganaste!!");
+  }
+  
+
+      //Comprobamos si la pelota toca algún ladrillo
+      rowheight = LADRILLO_ALTURA + ESPACIO_LADRILLOS;
+      colwidth  = LADRILLO_ANCHURA + ESPACIO_LADRILLOS;
+      row       = Math.floor(y/rowheight);
+      col       = Math.floor(x/colwidth);
+
+      //Si toca algún ladrillo, hacemos que la pelota rebote y marcamos el ladrillo como eliminado
+      if (y < NUM_FILAS * rowheight && row >= 0 && col >= 0 && ladrillos[row][col] == 1) {
+        dy = -dy;
+        ladrillos[row][col] = 0;
+      }
+
+    //Si golpea la pared
+    if (x + dx + 4> WIDTH || x + dx - 10< 0)    dx = -dx;
+
+    //Si golpea el techo
+    if (y + dy < 0)    dy = -dy;
+    else if (y + dy + 6> HEIGHT) { //Si golpea el suelo
+        if (x > paleta_x &&  x < paleta_x + PALETA_ANCHURA){ //Si golpea a la paleta
+          dy = -dy; //la pelota sube
+          if (toca_borde()){
+               dx = -dx;
+          }
+        } else{ //No toca la paleta, se termina el juego
+          //Paramos el juego
+          clearInterval(intervalId);
+          alert("Game Over!!");
+        }
+    }
+
+  //Desplazamos la pelota
+  x += dx;
+  y += dy;
+}
+
+
+
+function init() {
+    //Mostramos la paleta en la pantalla
+    crear_paleta();
+
+    //Mostramos los ladrillos
+    crear_ladrillos();
+
+    //Posicionamos la pelota
+    x = WIDTH / 2;
+    y = HEIGHT-PALETA_ALTURA;
+
+    //Iniciamos los manejadores de Eventos
+    window.addEventListener("keydown", onKeyDown, true);
+
+    //Ejecutamos el juego
+    return setInterval(draw, velocidad);
+
+}
+
+//Lanzamos el juego
+intervalId = init();
+
+</script>
+</body>
+</html>
