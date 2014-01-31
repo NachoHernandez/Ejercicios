@@ -9,7 +9,7 @@
 
 
 <canvas id="pantalla" width="300" height="500" style="border:1px solid;" />
-<script type="text/javascript"  src="js/html5.js" ></script>
+<script type="text/javascript"  src="html5.js" ></script>
 
 <script type="text/javascript">
 //Acceso al canvas
@@ -83,7 +83,13 @@ function onKeyDown(evt) {
   if (evt.keyCode == 39)  paleta_x += 35;
   else if (evt.keyCode == 37)  paleta_x -= 35;
 }
- 
+
+// Controlar que la paleta no se salga del canvas
+function controlPaleta {
+	if(paleta_x + PALETA_ANCHURA > WIDTH){
+	alert("te sales");
+	}
+}
 
 function pintar_paleta(ctx){
     ctx.fillStyle = "#FF0000";

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Cambio de color aleatorio con JavaScript</title>
+	<style>
+		#lienzo{
+			width: 200px;
+			height: 200px;
+			border: 1px solid red;
+			display: inline-block;
+
+		}
+
+		input{
+			display: inline-block;
+		}
+	</style>
+
+</head>
+<body>
+	<div id="lienzo"></div>
+	<input type="button" value="cambia color" onclick="cambiarColor()">
+	<input id="texto">
+	<script>
+	/* 
+		He recogido el contexto tanto del cuadrado donde voy a colorear,como del lugar donde pondremos el color que estamos viendo en hexadecimal.
+		Guardamos en la variable color el color aleatorio que genera el programa.
+		Aplicamos tanto el color como su "nombre" hexadecimal hacia nuestro html.
+	*/
+	function cambiarColor(){
+		var canvas= document.getElementById("lienzo");
+		var colour= document.getElementById("texto");
+		var color="#" + (Math.random()*0xFFFFFF<<0).toString(16)
+		canvas.style.backgroundColor=color;
+		colour.value=color;
+
+	}
+	</script>
+</body>
+</html>
