@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<title></title>
+</head>
+<body>
+    <p>Creamos un script que genera números hasta una cantidad que le pasamos nosotros como argumento, y desde un minimo hasta un maximo que tambien proporcionamos. Además comprobamos que ningun número se repita, y ordenamos de menor a mayor la serie de números que hemos almacenado en un array</p>
+<script type="text/javascript">
+	function Randoms(c, l, h) {
+    var count = c, // cantidad de números
+        min = l, // numero minimo
+        max = h, // numero maximo
+        nums = {}, // objeto
+        out = [], // array donde almacenamos números
+        r, len = 0;
+
+     if (max - min < count) count = max - min;
+    
+    var getRand = function() {
+        return Math.floor(Math.random() * (max - min) + min); // generamos numero aleatorio
+    },  check = function(a) {
+        return nums[a];
+    },  add = function(a) {
+        nums[a] = 1;
+        out.push(a);
+        len++; //acumula veces que añadimos un numero al array
+    };
+    
+    (function init() {
+        while(len < count){
+            if (len == 0) r = getRand();
+            else while (check(r = getRand()));
+            add(r);
+        } //funcion autoejecutable comprobamos que no se repita ningun numero
+    })();
+
+    this.get = function() {
+        return out.sort(function(a,b){return a-b}); // funcion que devuelve el array ordenado de menor a mayor
+    };
+}
+
+var a = new Randoms(10, 1, 26); // llamamos a la función que genera los numeros aleatorios indicandole que la cantidad de numeros es 10, el numero menor es 1 y el mayor es 25(26)
+document.write(a.get());
+
+</script>
+</body>
+</html>

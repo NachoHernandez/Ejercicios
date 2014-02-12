@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<p>Lo que hacemos con este script es comprobar en un array, que números son mayores de 50 y los introducimos en otro array, para mostrarlo en pantalla después</p>
+<script type="text/javascript">
+	var integers = [1, 27, 91, 32, 86, 12, 8, 68, 97, 72];
+var integerLimit = 50;
+var topIntegers = [];
+ 
+for (var i=0; i <= integers.length; i++) {    
+    if (integers[i] > integerLimit)
+    {
+        topIntegers.push(integers[i]);
+    }
+}
+document.write(topIntegers)
+</script>
+</body>
+</html>
